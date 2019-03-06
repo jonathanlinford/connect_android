@@ -1,0 +1,14 @@
+#!/bin/bash
+adb kill-server
+DEVICEIP=`adb shell ifconfig | grep "inet " | grep -v 127.0.0.1 | grep -v P-t-P | grep -o '[0-9].\+' | awk '{print $1}'`
+
+adb tcpip 5555
+adb connect $DEVICEIP:5555
+
+if [ $# -eq 1 ]
+then
+        if [ $1 == 'scrcpy' ]
+        then
+                scrcpy
+        fi
+fi
